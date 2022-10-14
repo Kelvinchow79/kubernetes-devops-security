@@ -27,7 +27,7 @@ pipeline {
                         sh 'docker push kelvinchowinfocepts/numeric-app:""$GIT_COMMIT""'
                         }
                     }
-            }
+            } //comment
       stage('Kubernetes Deployment -Dev') {
 	            steps {
                 withKubeConfig([credentialsId: "kubeconfig"]) {
