@@ -50,9 +50,9 @@ pipeline {
             "Trivy Scan":{
               sh "bash trivy-docker-image-scan.sh"
             },
-            //"OPA Conftest":{
-            //  sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
-            //}   	
+            "OPA Conftest":{
+              sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+            }   	
             )
           }
     }
@@ -60,7 +60,7 @@ pipeline {
 	            steps {
                 withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
                         sh 'printenv'
-                        sh 'sudo docker build -t kelvinchowinfocepts/numeric-app:""$GIT_COMMIT"" .'
+                        sh 'docker build -t kelvinchowinfocepts/numeric-app:""$GIT_COMMIT"" .'
                         sh 'docker push kelvinchowinfocepts/numeric-app:""$GIT_COMMIT""'
                         }
                     }
