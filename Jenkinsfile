@@ -41,16 +41,21 @@ pipeline {
                   }
             }
         }
-      stage('Vulnerability Scan - Docker ') {
-            steps {
+    stage('Vulnerability Scan - Docker') {
+      steps {
+        parallel(
+            "Dependency Scan": {
               sh "mvn dependency-check:check"
-            }
-            /* post {
-              always {
-                dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-              }
-            } */
-      }
+            },
+            "Trivy Scan":{
+              sh "bash trivy-docker-image-scan.sh"
+            },
+            //"OPA Conftest":{
+            //  sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+            //}   	
+            )
+          }
+    }
       stage('Docker Build and Push') {
 	            steps {
                 withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
