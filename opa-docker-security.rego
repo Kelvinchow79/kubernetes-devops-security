@@ -1,7 +1,7 @@
 package main
 
 # Do Not store secrets in ENV variables
-/* secrets_env = [
+secrets_env = [
     "passwd",
     "password",
     "pass",
@@ -12,7 +12,7 @@ package main
     "apikey",
     "token",
     "tkn"
-] */
+]
 
 deny[msg] {    
     input[i].Cmd == "env"
