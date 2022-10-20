@@ -21,7 +21,7 @@ deny[msg] {
     msg = sprintf("Line %d: Potential secret in ENV key found: %s", [i, val])
 }
 
- Only use trusted base images
+# Only use trusted base images
 deny[msg] {
     input[i].Cmd == "from"
     val := split(input[i].Value[0], "/")
